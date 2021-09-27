@@ -37,6 +37,10 @@ class DcaIntegratedDataset(models.Model):
     validated_by_employee_business_line = models.CharField(max_length=4000)
     data_steward_employee_business_line = models.CharField(max_length=4000)
 
+    class Meta:
+        managed = False
+        db_table = '[dca].[DCA_Integrated_dataset]'
+
     def save(self, *args, **kwargs):
         super(DcaIntegratedDataset, self).save(*args, **kwargs)
         if not self.integrated_dataset_name:
@@ -70,6 +74,10 @@ class DcaIntegratedDataElement(models.Model):
     integrated_data_element_version_start_date = models.DateField(blank=True, null=True)
     integrated_data_element_version_end_date = models.DateField(blank=True, null=True)
     key_risk_indicator = models.CharField(max_length=4000)
+
+    class Meta:
+        managed = False
+        db_table = '[dca].[DCA_Integrated_data_element]'
 
     def save(self, *args, **kwargs):
         super(DcaIntegratedDataElement, self).save(*args, **kwargs)

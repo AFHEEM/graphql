@@ -80,13 +80,34 @@ WSGI_APPLICATION = 'dca_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+DATABASE_HOST = os.environ['DATABASE_HOST']
+DATABASE_NAME = os.environ['DATABASE_NAME']
+TENANT_ID = os.environ['TENANT_ID']
+CLIENT_ID = os.environ['SPN_APP_ID']
+CLIENT_SECRET = os.environ['SPN_PASSWORD']
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': DATABASE_NAME,
+        'HOST': DATABASE_HOST,
+        'PORT': '',
+        'AAD-AUTH': {
+            'tenant_id': TENANT_ID,
+            'client_id': CLIENT_ID,
+            'secret': CLIENT_SECRET,
+        },
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server'
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
